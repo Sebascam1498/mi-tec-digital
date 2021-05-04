@@ -6,11 +6,10 @@
 
   <groupId>tec.bd.app</groupId>
   <artifactId>mi-tec-digital</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.2.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>mi-tec-digital</name>
-  <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
@@ -26,8 +25,38 @@
       <artifactId>commons-cli</artifactId>
       <version>1.4</version>
     </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.22</version>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>1.4.200</version>
+    </dependency>
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>4.0.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sparkjava</groupId>
+      <artifactId>spark-core</artifactId>
+      <version>2.9.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.6</version>
+    </dependency>
 
-
+    <!--  Dependencias para pruebas  -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -52,9 +81,40 @@
       <version>3.8.0</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>3.8.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
+
+    <plugins>
+
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.6</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
@@ -74,6 +134,37 @@
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.22.1</version>
+<!--          <configuration>-->
+<!--            <skip>true</skip>-->
+<!--          </configuration>-->
+<!--          <executions>-->
+<!--            <execution>-->
+<!--              <id>unit-test</id>-->
+<!--              <phase>test</phase>-->
+<!--              <goals>-->
+<!--                <goal>test</goal>-->
+<!--              </goals>-->
+<!--              <configuration>-->
+<!--                <skip>false</skip>-->
+<!--              </configuration>-->
+<!--            </execution>-->
+<!--            <execution>-->
+<!--            <id>integration-tests</id>-->
+<!--              <phase>integration-test</phase>-->
+<!--              <goals>-->
+<!--                <goal>test</goal>-->
+<!--              </goals>-->
+<!--              <configuration>-->
+<!--                <skip>false</skip>-->
+<!--                <excludes>-->
+<!--                  <exclude>**/*Test.java</exclude>-->
+<!--                </excludes>-->
+<!--                <includes>-->
+<!--                  <include>**/*IT.java</include>-->
+<!--                </includes>-->
+<!--              </configuration>-->
+<!--            </execution>-->
+<!--          </executions>-->
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
@@ -92,10 +183,26 @@
           <artifactId>maven-site-plugin</artifactId>
           <version>3.7.1</version>
         </plugin>
+
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>3.0.0-M5</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>integration-test</goal>
+                <goal>verify</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
@@ -109,8 +216,10 @@
           </executions>
           <configuration>
             <mainClass>tec.bd.app.App</mainClass>
+            <cleanupDaemonThreads>false</cleanupDaemonThreads>
           </configuration>
         </plugin>
+
       </plugins>
     </pluginManagement>
   </build>
