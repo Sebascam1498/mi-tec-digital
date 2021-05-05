@@ -3,6 +3,7 @@ package tec.bd.app;
 import tec.bd.app.dao.*;
 import tec.bd.app.dao.mysql.CursoMySqlDAOImpl;
 import tec.bd.app.dao.mysql.EstudianteMySqlDAOImpl;
+import tec.bd.app.dao.mysql.ProfesorMySqlDAOImpl;
 import tec.bd.app.dao.set.CursoSetDAOImpl;
 import tec.bd.app.dao.set.EstudianteSetDAOImpl;
 import tec.bd.app.dao.set.ProfesorSetDAOImpl;
@@ -51,14 +52,14 @@ public class ApplicationContext {
         applicationContext.setDB = initSetDB();
 //        applicationContext.estudianteDAO = initEstudianteSetDAO(applicationContext.setDB);
 //        applicationContext.cursoDAO = initCursoSetDAO(applicationContext.setDB);
-        applicationContext.profesorDAO = initProfesorSetDAO(applicationContext.setDB);
+        //applicationContext.profesorDAO = initProfesorSetDAO(applicationContext.setDB);
 
 //        Objetos que se conectan a MySQL
         String dbPropertiesFilePath = applicationContext.getClass().getResource(DATABASE_PROPERTIES_FILE).getFile();
         DBProperties databaseProperties = initDBProperties(dbPropertiesFilePath);
         applicationContext.estudianteDAO = initEstudianteMysqlDAO(databaseProperties);
         applicationContext.cursoDAO = initCursoMysqlDAO(databaseProperties);
-//        applicationContext.profesorDAO = initProfesorMysqlDAO(databaseProperties);
+        applicationContext.profesorDAO = initProfesorMysqlDAO(databaseProperties);
 
 
         applicationContext.estudianteService = initEstudianteService(applicationContext.estudianteDAO);
@@ -178,8 +179,8 @@ public class ApplicationContext {
     }
 
     private static ProfesorDAO initProfesorMysqlDAO(DBProperties dbProperties) {
-//        return new EstudianteMySqlDAOImpl(dbProperties);
-        return null;
+        return new ProfesorMySqlDAOImpl(dbProperties);
+
     }
 
 

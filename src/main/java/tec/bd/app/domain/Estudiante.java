@@ -10,6 +10,8 @@ public class Estudiante implements Entity {
     private Date fechaNacimiento;
     private int totalCreditos;
 
+
+
     public Estudiante(int carne, String nombre, String apellido, Date fechaNacimiento, int totalCreditos) {
         this.carne = carne;
         this.nombre = nombre;
@@ -17,6 +19,7 @@ public class Estudiante implements Entity {
         this.fechaNacimiento = fechaNacimiento;
         this.totalCreditos = totalCreditos;
     }
+
 
     public int getCarne() {
         return carne;

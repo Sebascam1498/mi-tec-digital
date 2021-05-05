@@ -2,6 +2,7 @@ package tec.bd.app.service;
 
 import tec.bd.app.dao.ProfesorDAO;
 import tec.bd.app.domain.Curso;
+import tec.bd.app.domain.Estudiante;
 import tec.bd.app.domain.Profesor;
 
 import java.util.List;
@@ -13,11 +14,13 @@ public interface ProfesorService {
 
     Optional<Profesor> getById(int id);
 
-    void addNew(ProfesorDAO p);
+    void addNew(Profesor p);
 
-    Optional<Curso> updateProfessor(Profesor p);
+    Optional<Profesor> updateProfessor(Profesor p);
 
     void deleteProfessor(int id);
+
+    Optional<Profesor> getProfesorByCuidad(String cuidad);
 
     // nuevo metodo para ver los profesores por ciudad
 }

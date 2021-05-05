@@ -49,24 +49,6 @@ public class CursoSetDAOImplTest {
         this.cursoDAO = new CursoSetDAOImpl(setDB);
     }
 
-    @Test
-    public void findByDepartment() throws Exception {
-
-        var actual = this.cursoDAO.findByDepartment("Biologia");
-
-        assertThat(actual).hasSize(2);
-
-    }
-
-
-    @Test
-    public void findByDepartment_whenNoDepartmentExists() throws Exception {
-
-        var actual = this.cursoDAO.findByDepartment("Agronomia");
-
-        assertThat(actual).isEmpty();
-
-    }
 
 
 }

@@ -5,6 +5,8 @@ import tec.bd.app.database.set.Row;
 import tec.bd.app.database.set.SetDB;
 import tec.bd.app.domain.Profesor;
 
+import java.util.Optional;
+
 public class ProfesorSetDAOImpl extends GenericSetDAOImpl<Profesor, Integer> implements ProfesorDAO {
 
     public ProfesorSetDAOImpl(SetDB setDB) {
@@ -19,5 +21,10 @@ public class ProfesorSetDAOImpl extends GenericSetDAOImpl<Profesor, Integer> imp
     @Override
     protected Row entityToRow(Profesor e) {
         return null;
+    }
+
+    @Override
+    public Optional<Profesor> findByCuidad(String cuidad) {
+        return Optional.empty();
     }
 }

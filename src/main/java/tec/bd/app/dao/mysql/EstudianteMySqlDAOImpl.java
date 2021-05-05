@@ -19,7 +19,9 @@ public class EstudianteMySqlDAOImpl extends GenericMySqlDAOImpl<Estudiante, Inte
     private final DBProperties dbProperties;
 
     private static final String SQL_SELECT_ESTUDIANTES = "select id, nombre, apellido, fecha_nacimiento, total_creditos from estudiante;";
+    private static final String SQL_SELECT_ESTUDIANTES_SORT_APELLIDO = "select id, nombre, apellido, fecha_nacimiento, total_creditos from estudiante order by apellido;";
     private static final String SQL_SELECT_ESTUDIANTE_ID = "select id, nombre, apellido, fecha_nacimiento, total_creditos from estudiante where id = %d";
+    private static final String SQL_SELECT_ESTUDIANTE_APELLIDO = "select id, nombre, apellido, total_creditos, fecha_nacimiento from estudiante where apellido = '%s'";
     private static final String SQL_INSERT_ESTUDIANTE = "insert into estudiante(id, nombre, apellido, fecha_nacimiento, total_creditos) values(%d, '%s', '%s', '%tF', %d)";
     private static final String SQL_UPDATE_ESTUDIANTE = "update estudiante set nombre = '%s', apellido = '%s', fecha_nacimiento = '%tF', total_creditos = %d where id = %d";
     private static final String SQL_DELETE_ESTUDIANTE = "delete from estudiante where id = %d";
@@ -29,13 +31,44 @@ public class EstudianteMySqlDAOImpl extends GenericMySqlDAOImpl<Estudiante, Inte
     }
 
     @Override
-    public List<Estudiante> findByLastName(String lastName) {
-        return null;
+    public Optional<Estudiante> findByLastName(String lastName) {
+        try {
+            try (Connection connection = this.dbProperties.getConnection()) {
+                try (Statement stmt = connection.createStatement()) {
+                    //execute query
+                    var sql = String.format(SQL_SELECT_ESTUDIANTE_APELLIDO, lastName);
+                    LOG.info(sql);
+                    try (ResultSet rs = stmt.executeQuery(sql)) {
+                        return this.resultSetToList(rs).stream().findFirst();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Error when running {}", SQL_SELECT_ESTUDIANTE_APELLIDO, e);
+        }
+
+        return Optional.empty();
     }
 
     @Override
     public List<Estudiante> findAllSortByLastName() {
-        return null;
+
+        try {
+            try (Connection connection = this.dbProperties.getConnection()) {
+                LOG.info(SQL_SELECT_ESTUDIANTES_SORT_APELLIDO);
+                try (Statement stmt = connection.createStatement()) {
+                    //execute query
+                    try (ResultSet rs = stmt.executeQuery(SQL_SELECT_ESTUDIANTES_SORT_APELLIDO)) {
+                        return this.resultSetToList(rs);
+                    }
+
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Error when running {}", SQL_SELECT_ESTUDIANTES_SORT_APELLIDO, e);
+        }
+
+        return Collections.emptyList();
     }
 
     @Override

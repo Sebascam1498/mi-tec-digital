@@ -5,7 +5,7 @@ import tec.bd.app.database.set.Row;
 import tec.bd.app.database.set.SetDB;
 import tec.bd.app.domain.Curso;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CursoSetDAOImpl extends GenericSetDAOImpl<Curso, Integer> implements CursoDAO {
@@ -15,11 +15,8 @@ public class CursoSetDAOImpl extends GenericSetDAOImpl<Curso, Integer> implement
     }
 
     @Override
-    public List<Curso> findByDepartment(String department) {
-        return this.findAll()
-                .stream()
-                .filter(c -> c.getDepartamento().equals(department))
-                .collect(Collectors.toList());
+    public Optional<Curso> findByDepartment(String department) {
+        return null;
     }
 
     @Override

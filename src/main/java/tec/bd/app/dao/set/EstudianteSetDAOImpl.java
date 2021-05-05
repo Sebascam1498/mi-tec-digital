@@ -8,6 +8,7 @@ import tec.bd.app.domain.Estudiante;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class EstudianteSetDAOImpl extends GenericSetDAOImpl<Estudiante, Integer> implements EstudianteDAO {
 
@@ -16,7 +17,7 @@ public class EstudianteSetDAOImpl extends GenericSetDAOImpl<Estudiante, Integer>
     }
 
     @Override
-    public List<Estudiante> findByLastName(String lastName) {
+    public Optional<Estudiante> findByLastName(String lastName) {
         return null;
     }
 
@@ -33,6 +34,7 @@ public class EstudianteSetDAOImpl extends GenericSetDAOImpl<Estudiante, Integer>
         var apellido = row.stringAttributeValue("apellido");
         var fechaNacimiento = row.dateAttributeValue("fechaNacimiento");
         var totalCreditos = row.intAttributeValue("totalCreditos");
+
         return new Estudiante(carne, nombre, apellido, fechaNacimiento, totalCreditos);
     }
 

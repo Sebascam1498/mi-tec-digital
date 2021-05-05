@@ -22,20 +22,7 @@ public class CursoServiceImplTest {
     @InjectMocks
     CursoServiceImpl cursoService;
 
-    @Test
-    public void getByDepartment() throws Exception {
 
-        List<Curso> cursos = Arrays.asList(mock(Curso.class), mock(Curso.class));
-
-        given(cursoDAO.findByDepartment(anyString())).willReturn(cursos);
-
-        // Aqui estamos haciendo el TEST
-        var actual = this.cursoService.getByDepartment("Biologia");
-
-        verify(cursoDAO, times(1)).findByDepartment("Biologia");
-
-        assertThat(actual).hasSize(2);
-    }
 
 
 }

@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import tec.bd.app.dao.CursoDAO;
 import tec.bd.app.database.mysql.DBProperties;
 import tec.bd.app.domain.Curso;
-import tec.bd.app.domain.Estudiante;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,6 +20,11 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
     private static final Logger LOG = LoggerFactory.getLogger(CursoMySqlDAOImpl.class);
 
     private static final String SQL_SELECT_CURSOS = "select id, nombre, creditos, departamento from curso;";
+    private static final String SQL_INSERT_CURSO = "insert into curso(id, nombre, departamento, creditos) values(%d, '%s', '%s', %d)";
+    private static final String SQL_UPDATE_CURSO = "update curso set nombre = '%s', departamento = '%s', creditos = %d where id = %d";
+    private static final String SQL_DELETE_CURSO = "delete from curso where id = %d";
+    private static final String SQL_SELECT_CURSO_DEPARTAMENTO = "select id, nombre, departamento, creditos from curso where departamento = '%s'";
+    private static final String SQL_SELECT_CURSO_ID = "select id, nombre, departamento, creditos from curso where id = %d";
 
     private final DBProperties dbProperties;
 
@@ -29,8 +33,23 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
     }
 
     @Override
-    public List<Curso> findByDepartment(String department) {
-        return null;
+    public Optional<Curso> findByDepartment(String department) {
+        try {
+            try (Connection connection = this.dbProperties.getConnection()) {
+                try (Statement stmt = connection.createStatement()) {
+                    //execute query
+                    var sql = String.format(SQL_SELECT_CURSO_DEPARTAMENTO, department);
+                    LOG.info(sql);
+                    try (ResultSet rs = stmt.executeQuery(sql)) {
+                        return this.resultSetToList(rs).stream().findFirst();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Error when running {}", SQL_SELECT_CURSO_DEPARTAMENTO, e);
+        }
+
+        return Optional.empty();
     }
 
     @Override
@@ -53,22 +72,89 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
     }
 
     @Override
-    public Optional<Curso> findById(Integer integer) {
+    public Optional<Curso> findById(Integer id) {
+        try {
+            try (Connection connection = this.dbProperties.getConnection()) {
+                try (Statement stmt = connection.createStatement()) {
+                    //execute query
+                    var sql = String.format(SQL_SELECT_CURSO_ID, id);
+                    LOG.info(sql);
+                    try (ResultSet rs = stmt.executeQuery(sql)) {
+                        return this.resultSetToList(rs).stream().findFirst();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Error when running {}", SQL_SELECT_CURSO_ID, e);
+        }
+
         return Optional.empty();
     }
 
     @Override
     public void save(Curso curso) {
+        try {
+            try (Connection connection = this.dbProperties.getConnection()) {
+                try (Statement stmt = connection.createStatement()) {
+                    //execute query
+                    var sql = String.format(SQL_INSERT_CURSO,
+                            curso.getId(),
+                            curso.getNombre(),
+                            curso.getDepartamento(),
+                            curso.getCreditos()
+                    );
+                    LOG.info(sql);
+                    int rowCount = stmt.executeUpdate(sql);
+                    LOG.debug("{} fila agregada", rowCount);
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Error when running {}", SQL_INSERT_CURSO, e);
+        }
 
     }
 
     @Override
     public Optional<Curso> update(Curso curso) {
+        try {
+            try (Connection connection = this.dbProperties.getConnection()) {
+                try (Statement stmt = connection.createStatement()) {
+                    //execute query
+                    var sql = String.format(SQL_UPDATE_CURSO,
+                            curso.getNombre(),
+                            curso.getDepartamento(),
+                            curso.getCreditos()
+                    );
+                    LOG.info(sql);
+                    int rowCount = stmt.executeUpdate(sql);
+                    LOG.debug("{} fila actualizada", rowCount);
+                    if(rowCount == 1) {
+                        return Optional.of(curso);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Error when running {}", SQL_UPDATE_CURSO, e);
+        }
+
         return Optional.empty();
     }
 
     @Override
-    public void delete(Integer integer) {
+    public void delete(Integer id) {
+        try {
+            try (Connection connection = this.dbProperties.getConnection()) {
+                try (Statement stmt = connection.createStatement()) {
+                    //execute query
+                    var sql = String.format(SQL_DELETE_CURSO, id);
+                    LOG.info(sql);
+                    int rowCount = stmt.executeUpdate(sql);
+                    LOG.debug("{} fila borrada", rowCount);
+                }
+            }
+        } catch (SQLException e) {
+            LOG.error("Error when running {}", SQL_DELETE_CURSO, e);
+        }
 
     }
 
