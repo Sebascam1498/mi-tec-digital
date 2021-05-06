@@ -2,10 +2,10 @@ package tec.bd.app.dao;
 
 import tec.bd.app.domain.Curso;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface CursoDAO extends GenericDAO<Curso, Integer> {
 
-    Optional<Curso> findByDepartment(String department);
+    List<Curso> findByDepartment(String department);
 
 }

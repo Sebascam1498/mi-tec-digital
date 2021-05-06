@@ -85,7 +85,8 @@ public class ProfesorMySqlDAOImpl extends GenericMySqlDAOImpl<Profesor, Integer>
                             profesor.getNombre(),
                             profesor.getApellido(),
                             profesor.getSueldo(),
-                            profesor.getDeparamento()
+                            profesor.getDeparamento(),
+                            profesor.getCuidad()
                     );
                     LOG.info(sql);
                     int rowCount = stmt.executeUpdate(sql);
@@ -109,7 +110,8 @@ public class ProfesorMySqlDAOImpl extends GenericMySqlDAOImpl<Profesor, Integer>
                             profesor.getNombre(),
                             profesor.getApellido(),
                             profesor.getSueldo(),
-                            profesor.getDeparamento()
+                            profesor.getDeparamento(),
+                            profesor.getCuidad()
                     );
                     LOG.info(sql);
                     int rowCount = stmt.executeUpdate(sql);
@@ -171,7 +173,7 @@ public class ProfesorMySqlDAOImpl extends GenericMySqlDAOImpl<Profesor, Integer>
         var apellido = resultSet.getString("apellido");
         var sueldo = resultSet.getInt("sueldo");
         var departamento = resultSet.getString("departamento");
-        var cuidad = resultSet.getString("departamento");
+        var cuidad = resultSet.getString("cuidad");
         return new Profesor(id, nombre, apellido, sueldo, departamento,cuidad);
     }
 

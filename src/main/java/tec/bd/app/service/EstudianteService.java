@@ -19,6 +19,6 @@ public interface EstudianteService {
 
     List<Estudiante> getStudentsSortedByLastName();
 
-    Optional<Estudiante> getStudentsByLastName(String lastName);
+    List<Estudiante> getStudentsByLastName(String lastName);
 
 }

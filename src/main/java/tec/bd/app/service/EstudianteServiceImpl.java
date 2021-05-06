@@ -63,7 +63,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     }
 
     @Override
-    public Optional<Estudiante> getStudentsByLastName(String lastName) {
+    public List<Estudiante> getStudentsByLastName(String lastName) {
         return this.estudianteDAO.findByLastName(lastName);
     }
 

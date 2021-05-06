@@ -12,6 +12,7 @@ import tec.bd.app.service.ProfesorService;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -304,8 +305,7 @@ public class App  {
                         newProfesorValues[2],
                         Integer.parseInt(newProfesorValues[3]),
                         newProfesorValues[4],
-                        newProfesorValues[5]
-                        );
+                        newProfesorValues[5]);
                 showAllProfesores(profesorService);
 
             } else if(cmd.hasOption("pd")) {
@@ -392,11 +392,15 @@ public class App  {
     }
 
     public static void showStudentApellido(EstudianteService estudianteService, String apellido) {
-        Optional<Estudiante> estudiante = estudianteService.getStudentsByLastName(apellido);
-        if(estudiante.isPresent()) {
-            System.out.println("Estudiante: " + estudiante.get().getNombre() + " " + estudiante.get().getApellido());
-            System.out.println("Carne: " + estudiante.get().getCarne());
-        } else {
+        List<Estudiante> estudiante = estudianteService.getStudentsByLastName(apellido);
+        if (estudiante.size()>0){
+            for (int i=0;i<estudiante.size();i++){
+                System.out.println("Estudiante: " + estudiante.get(i).getNombre() + " " + estudiante.get(i).getApellido());
+                System.out.println("Carne: " + estudiante.get(i).getCarne());
+
+            }
+        }
+         else {
             System.out.println("Estudiante con carne: " + apellido + " no existe");
         }
     }
@@ -450,10 +454,14 @@ public class App  {
 
     public static void showCursoDepartamento(CursoService cursoService, String departamento) {
 
-        Optional<Curso> curso = cursoService.getByDepartment(departamento);
-        if(curso.isPresent()) {
-            System.out.println("Curso: " + curso.get().getNombre() + " Id:" + curso.get().getId()+ " Departamento:" + curso.get().getDepartamento()+ " Creditos:" + curso.get().getCreditos());
-        } else {
+        List<Curso> curso = cursoService.getByDepartment(departamento);
+        if (curso.size()>0){
+            for (int i=0;i<curso.size();i++){
+                System.out.println("Curso: " + curso.get(i).getNombre() + " Id:" + curso.get(i).getId()+ " Departamento:" + curso.get(i).getDepartamento()+ " Creditos:" + curso.get(i).getCreditos());
+
+            }
+        }
+         else {
             System.out.println("Curso el departamento de: " + departamento + " no existe");
         }
     }

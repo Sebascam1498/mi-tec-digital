@@ -17,7 +17,7 @@ public interface CursoService {
 
     void deleteCourse(int id);
 
-    Optional<Curso> getByDepartment(String department);
+    List<Curso> getByDepartment(String department);
 
 
 }

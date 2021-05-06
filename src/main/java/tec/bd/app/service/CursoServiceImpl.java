@@ -2,7 +2,6 @@ package tec.bd.app.service;
 
 import tec.bd.app.dao.CursoDAO;
 import tec.bd.app.domain.Curso;
-import tec.bd.app.domain.Estudiante;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,7 +63,7 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
-    public Optional<Curso> getByDepartment(String department) {
+    public List<Curso> getByDepartment(String department) {
         // validar si department es nulo o vacio. Si NO es nulo o vacio se va a poder llamar al DAO
         // sino, se retorna una lista vacia
 
