@@ -1,0 +1,43 @@
+
+DROP SCHEMA IF EXISTS Movies;
+
+CREATE DATABASE Movies;
+
+USE Movies;
+
+DROP TABLE IF EXISTS Movie;
+DROP TABLE IF EXISTS Category;
+DROP TABLE IF EXISTS Rating;
+DROP TABLE IF EXISTS Users;
+
+
+CREATE TABLE Category(
+Id INT PRIMARY KEY AUTO_INCREMENT,
+Name_Category VARCHAR(100)
+);
+
+CREATE TABLE Movie(
+Id INT PRIMARY KEY,
+Title VARCHAR(200),
+ReleaseDate DATETIME,
+Category_Id INT,
+ CONSTRAINT Category_Fk FOREIGN KEY (Category_Id) REFERENCES Category(Id)
+);
+
+
+CREATE TABLE Users(
+Id INT PRIMARY KEY,
+User_Name VARCHAR(50),
+First_Name VARCHAR(50),
+Last_Name VARCHAR(50)
+);
+
+CREATE TABLE Rating(
+Movie_Id INT,
+Score INT check (Score >0 AND Score < 5),
+Review VARCHAR(255),
+User_Id INT,
+CONSTRAINT Movie_Id_Fk FOREIGN KEY (Movie_Id) REFERENCES Movie(Id),
+CONSTRAINT User_Id_Fk FOREIGN KEY (User_Id) REFERENCES Users(Id)
+);
+
