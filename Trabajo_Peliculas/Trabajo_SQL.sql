@@ -58,6 +58,7 @@ INSERT INTO Users(User_Name,First_Name,Last_Name) VALUES ("HighCore","Paula","Za
 INSERT INTO Users(User_Name,First_Name,Last_Name) VALUES ("HardCore","Sofia","Castro");
 INSERT INTO Users(User_Name,First_Name,Last_Name) VALUES ("Sebas1409","Sebastian","Campos");
 INSERT INTO Users(User_Name,First_Name,Last_Name) VALUES ("JP","Jorge","Perez");
+INSERT INTO Users(User_Name,First_Name,Last_Name) VALUES ("Valee","Valeria","Soto");
 
 INSERT INTO Rating(Movie_Id,Score,Review,User_Id) VALUES (1,4,"Buena",5);
 INSERT INTO Rating(Movie_Id,Score,Review,User_Id) VALUES (2,2,"Mala",4);
@@ -65,3 +66,31 @@ INSERT INTO Rating(Movie_Id,Score,Review,User_Id) VALUES (3,1,"Muy MAla",3);
 INSERT INTO Rating(Movie_Id,Score,Review,User_Id) VALUES (4,1,"Horrorossa",2);
 INSERT INTO Rating(Movie_Id,Score,Review,User_Id) VALUES (5,5,"Increible",1);
 
+
+select * from movie as m inner join category as c on m.category_id = c.id;
+
+select * from movie as m left join category as c on m.category_id = c.id;
+select * from movie as m right join category as c on m.category_id = c.id;
+
+select * from users as u left join rating as r on u.id = r.user_id where review is null;
+
+DROP FUNCTION IF EXISTS movie_rating;
+
+delimiter $$
+create function movie_rating(movie_id int,user_id int) returns varchar(50) reads sql data
+begin
+	declare the_score int;
+	select r.score into the_score from rating as r where r.movie_id = movie_id and r.user_id = user_id;
+    case the_score
+		when 1 then return "mala";
+        when 2 then return "regular";
+        when 3 then return "buena";
+        when 4 then return "muy buena";
+        when 5 then return "excelente";
+        else return "no calificado";
+        end case;
+end
+$$
+
+select * from rating;
+select movie_rating(1,5);
