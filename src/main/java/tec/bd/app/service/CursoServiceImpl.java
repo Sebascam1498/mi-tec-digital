@@ -44,21 +44,16 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public Optional<Curso> updateCourse(Curso c) {
         //TODO: validar que el carne exista en la BD. Si existe se actualiza
-        if(this.getById(c.getId()).isPresent()) {
+
             return this.cursoDAO.update(c);
-        }
-        return Optional.empty();
+
     }
 
     @Override
     public void deleteCourse(int id) {
         //TODO: validar que el carne exista en la BD. Si existe se borra
-        if (getById(id).isPresent()){
+
             this.cursoDAO.delete(id);
-        }
-        else {
-            System.out.println("No existe en la base de datos");
-        }
 
     }
 

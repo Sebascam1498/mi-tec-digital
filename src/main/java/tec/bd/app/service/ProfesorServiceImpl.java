@@ -44,22 +44,19 @@ public class ProfesorServiceImpl implements ProfesorService {
 
     @Override
     public Optional<Profesor> updateProfessor(Profesor p) {
-        if(this.getById(p.getId()).isPresent()) {
+
             return this.profesorDAO.update(p);
-        }
-        return Optional.empty();
+
     }
 
 
     @Override
     public void deleteProfessor(int id) {
         //TODO: validar que el carne exista en la BD. Si existe se borra
-        if (getById(id).isPresent()){
+
             this.profesorDAO.delete(id);
-        }
-        else {
-            System.out.println("No existe en la base de datos");
-        }
+
+
 
     }
 

@@ -4,6 +4,9 @@ import tec.bd.app.dao.*;
 import tec.bd.app.dao.mysql.CursoMySqlDAOImpl;
 import tec.bd.app.dao.mysql.EstudianteMySqlDAOImpl;
 import tec.bd.app.dao.mysql.ProfesorMySqlDAOImpl;
+import tec.bd.app.dao.mysql.routine.CursoMySqlDAOImplPro;
+import tec.bd.app.dao.mysql.routine.EstudianteMySqlDAOImplPro;
+import tec.bd.app.dao.mysql.routine.ProfesorMySqlDAOImplPro;
 import tec.bd.app.dao.set.CursoSetDAOImpl;
 import tec.bd.app.dao.set.EstudianteSetDAOImpl;
 import tec.bd.app.dao.set.ProfesorSetDAOImpl;
@@ -57,9 +60,13 @@ public class ApplicationContext {
 //        Objetos que se conectan a MySQL
         String dbPropertiesFilePath = applicationContext.getClass().getResource(DATABASE_PROPERTIES_FILE).getFile();
         DBProperties databaseProperties = initDBProperties(dbPropertiesFilePath);
-        applicationContext.estudianteDAO = initEstudianteMysqlDAO(databaseProperties);
-        applicationContext.cursoDAO = initCursoMysqlDAO(databaseProperties);
-        applicationContext.profesorDAO = initProfesorMysqlDAO(databaseProperties);
+        applicationContext.cursoDAO = initCursoMysqlDAOPro(databaseProperties);
+        applicationContext.estudianteDAO = initEstudianteMysqlDAOPro(databaseProperties);
+        applicationContext.profesorDAO = initProfesorMysqlDAOPro(databaseProperties);
+
+        //applicationContext.estudianteDAO = initEstudianteMysqlDAO(databaseProperties);
+        //applicationContext.cursoDAO = initCursoMysqlDAO(databaseProperties);
+        //applicationContext.profesorDAO = initProfesorMysqlDAO(databaseProperties);
 
 
         applicationContext.estudianteService = initEstudianteService(applicationContext.estudianteDAO);
@@ -183,6 +190,15 @@ public class ApplicationContext {
 
     }
 
+    private static CursoDAO initCursoMysqlDAOPro(DBProperties dbProperties) {
+        return new CursoMySqlDAOImplPro(dbProperties);
+    }
+    private static ProfesorDAO initProfesorMysqlDAOPro(DBProperties dbProperties) {
+        return new ProfesorMySqlDAOImplPro(dbProperties);
+    }
+    private static EstudianteDAO initEstudianteMysqlDAOPro(DBProperties dbProperties) {
+        return new EstudianteMySqlDAOImplPro(dbProperties);
+    }
 
 //    Servicios
 
