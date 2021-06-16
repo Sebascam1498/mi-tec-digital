@@ -31,7 +31,7 @@ public class EstudianteMySqlDAOImpl extends GenericMySqlDAOImpl<Estudiante, Inte
     }
 
     @Override
-    public Optional<Estudiante> findByLastName(String lastName) {
+    public List<Estudiante> findByLastName(String lastName) {
         try {
             try (Connection connection = this.dbProperties.getConnection()) {
                 try (Statement stmt = connection.createStatement()) {
@@ -39,7 +39,7 @@ public class EstudianteMySqlDAOImpl extends GenericMySqlDAOImpl<Estudiante, Inte
                     var sql = String.format(SQL_SELECT_ESTUDIANTE_APELLIDO, lastName);
                     LOG.info(sql);
                     try (ResultSet rs = stmt.executeQuery(sql)) {
-                        return this.resultSetToList(rs).stream().findFirst();
+                        return this.resultSetToList(rs);
                     }
                 }
             }
@@ -47,7 +47,7 @@ public class EstudianteMySqlDAOImpl extends GenericMySqlDAOImpl<Estudiante, Inte
             LOG.error("Error when running {}", SQL_SELECT_ESTUDIANTE_APELLIDO, e);
         }
 
-        return Optional.empty();
+        return Collections.emptyList();
     }
 
     @Override

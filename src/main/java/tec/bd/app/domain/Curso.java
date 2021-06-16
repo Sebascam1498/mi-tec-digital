@@ -2,7 +2,7 @@ package tec.bd.app.domain;
 
 public class Curso implements Entity {
 
-    private Integer id;
+    private int id;
     private String nombre;
     private String departamento;
     private int creditos;
@@ -11,7 +11,7 @@ public class Curso implements Entity {
 
     }
 
-    public Curso(Integer id, String nombre, int creditos, String departamento) {
+    public Curso(int id, String nombre, int creditos, String departamento) {
         this.id = id;
         this.nombre = nombre;
         this.creditos = creditos;

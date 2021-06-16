@@ -12,6 +12,7 @@ import tec.bd.app.service.ProfesorService;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -304,8 +305,7 @@ public class App  {
                         newProfesorValues[2],
                         Integer.parseInt(newProfesorValues[3]),
                         newProfesorValues[4],
-                        newProfesorValues[5]
-                        );
+                        newProfesorValues[5]);
                 showAllProfesores(profesorService);
 
             } else if(cmd.hasOption("pd")) {
@@ -373,32 +373,20 @@ public class App  {
         System.out.println("-----------------------------------------------------------------------");
         System.out.println("Carne\t\tNombre\t\tApellido\tFecha Nacimiento\tCreditos");
         System.out.println("-----------------------------------------------------------------------");
-        for(Estudiante estudiante : estudianteService.getStudentsSortedByLastName()) {
-            System.out.println(estudiante.getCarne() + "\t\t" + estudiante.getNombre() + "\t\t" +estudiante.getApellido() + "\t\t"+ estudiante.getFechaNacimiento() + "\t\t" + estudiante.getTotalCreditos());
-        }
+        estudianteService.getStudentsSortedByLastName();
         System.out.println("-----------------------------------------------------------------------");
         System.out.println("\n\n");
     }
 
 
     public static void showStudentInfo(EstudianteService estudianteService, int carne) {
-        Optional<Estudiante> estudiante = estudianteService.getById(carne);
-        if(estudiante.isPresent()) {
-            System.out.println("Estudiante: " + estudiante.get().getNombre() + " " + estudiante.get().getApellido());
-            System.out.println("Carne: " + estudiante.get().getCarne());
-        } else {
-            System.out.println("Estudiante con carne: " + carne + " no existe");
-        }
+        estudianteService.getById(carne);
+
     }
 
     public static void showStudentApellido(EstudianteService estudianteService, String apellido) {
-        Optional<Estudiante> estudiante = estudianteService.getStudentsByLastName(apellido);
-        if(estudiante.isPresent()) {
-            System.out.println("Estudiante: " + estudiante.get().getNombre() + " " + estudiante.get().getApellido());
-            System.out.println("Carne: " + estudiante.get().getCarne());
-        } else {
-            System.out.println("Estudiante con carne: " + apellido + " no existe");
-        }
+        estudianteService.getStudentsByLastName(apellido);
+
     }
 
     public static void addNewStudent(EstudianteService estudianteService, int carne, String nombre, String apellido,
@@ -450,21 +438,18 @@ public class App  {
 
     public static void showCursoDepartamento(CursoService cursoService, String departamento) {
 
-        Optional<Curso> curso = cursoService.getByDepartment(departamento);
-        if(curso.isPresent()) {
-            System.out.println("Curso: " + curso.get().getNombre() + " Id:" + curso.get().getId()+ " Departamento:" + curso.get().getDepartamento()+ " Creditos:" + curso.get().getCreditos());
-        } else {
-            System.out.println("Curso el departamento de: " + departamento + " no existe");
-        }
+        List<Curso> curso = cursoService.getByDepartment(departamento);
     }
 
     public static void showCursoInfo(CursoService cursoService, int id) {
+
+        System.out.println("\n\n");
+        System.out.println("Lista de Cursos");
+        System.out.println("-----------------------------------------------------------------------");
+        System.out.println("ID\t\tNombre\t\tCreditos\tDepartamento");
+        System.out.println("-----------------------------------------------------------------------");
         Optional<Curso> curso = cursoService.getById(id);
-        if(curso.isPresent()) {
-            System.out.println("Curso: " + curso.get().getNombre() + " Departamento:" + curso.get().getDepartamento()+ " Creditos:" + curso.get().getCreditos());
-        } else {
-            System.out.println("Curso con id: " + id + " no existe");
-        }
+
     }
 
     public static void showAllProfesores(ProfesorService profesorService) {
@@ -497,13 +482,8 @@ public class App  {
         profesorService.deleteProfessor(id);
     }
     public static void showProfesorCuidad(ProfesorService profesorService, String cuidad) {
-        Optional<Profesor> profesor = profesorService.getProfesorByCuidad(cuidad);
-        if(profesor.isPresent()) {
-            System.out.println("Profesor: " + profesor.get().getNombre() + " " + profesor.get().getApellido());
-            System.out.println("Id: " + profesor.get().getId() + " Departamento:" + profesor.get().getDeparamento()+ " Sueldo:" + profesor.get().getSueldo()+ " Cuidad:" + profesor.get().getCuidad());
-        } else {
-            System.out.println("Profesores con cuidad: " + cuidad + " no existe");
-        }
+       profesorService.getProfesorByCuidad(cuidad);
+
     }
 
     public static void showProfesorInfo(ProfesorService profesorService, int id) {

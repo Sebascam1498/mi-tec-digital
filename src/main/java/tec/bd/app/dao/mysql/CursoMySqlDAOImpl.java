@@ -33,7 +33,7 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
     }
 
     @Override
-    public Optional<Curso> findByDepartment(String department) {
+    public List<Curso> findByDepartment(String department) {
         try {
             try (Connection connection = this.dbProperties.getConnection()) {
                 try (Statement stmt = connection.createStatement()) {
@@ -41,7 +41,7 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
                     var sql = String.format(SQL_SELECT_CURSO_DEPARTAMENTO, department);
                     LOG.info(sql);
                     try (ResultSet rs = stmt.executeQuery(sql)) {
-                        return this.resultSetToList(rs).stream().findFirst();
+                        return this.resultSetToList(rs);
                     }
                 }
             }
@@ -49,7 +49,7 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
             LOG.error("Error when running {}", SQL_SELECT_CURSO_DEPARTAMENTO, e);
         }
 
-        return Optional.empty();
+        return Collections.emptyList();
     }
 
     @Override
@@ -123,7 +123,8 @@ public class CursoMySqlDAOImpl extends GenericMySqlDAOImpl<Curso, Integer> imple
                     var sql = String.format(SQL_UPDATE_CURSO,
                             curso.getNombre(),
                             curso.getDepartamento(),
-                            curso.getCreditos()
+                            curso.getCreditos(),
+                            curso.getId()
                     );
                     LOG.info(sql);
                     int rowCount = stmt.executeUpdate(sql);

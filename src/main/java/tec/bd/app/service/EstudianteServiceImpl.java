@@ -30,31 +30,25 @@ public class EstudianteServiceImpl implements EstudianteService {
     }
 
     public void addNew(Estudiante e) {
-        Optional<Estudiante> estudiante = this.estudianteDAO.findById(e.getCarne());
-        if(!estudiante.isPresent()) {
+
             this.estudianteDAO.save(e);
-        }
-        else{
-            System.out.println("Ya existe ese Id");
-        }
+
+
     }
 
     public Optional<Estudiante> updateStudent(Estudiante e) {
         //TODO: validar que el carne exista en la BD. Si existe se actualiza
-        if(this.getById(e.getCarne()).isPresent()) {
+
             return this.estudianteDAO.update(e);
-        }
-        return Optional.empty();
+
     }
 
     public void deleteStudent(int carne) {
         //TODO: validar que el carne exista en la BD. Si existe se borra
-        if (getById(carne).isPresent()){
+
             this.estudianteDAO.delete(carne);
-        }
-        else {
-            System.out.println("No existe en la base de datos");
-        }
+
+
 
     }
 
@@ -63,7 +57,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     }
 
     @Override
-    public Optional<Estudiante> getStudentsByLastName(String lastName) {
+    public List<Estudiante> getStudentsByLastName(String lastName) {
         return this.estudianteDAO.findByLastName(lastName);
     }
 

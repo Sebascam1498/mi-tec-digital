@@ -6,9 +6,7 @@ import tec.bd.app.database.set.RowAttribute;
 import tec.bd.app.database.set.SetDB;
 import tec.bd.app.domain.Estudiante;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public class EstudianteSetDAOImpl extends GenericSetDAOImpl<Estudiante, Integer> implements EstudianteDAO {
 
@@ -17,7 +15,7 @@ public class EstudianteSetDAOImpl extends GenericSetDAOImpl<Estudiante, Integer>
     }
 
     @Override
-    public Optional<Estudiante> findByLastName(String lastName) {
+    public List<Estudiante> findByLastName(String lastName) {
         return null;
     }
 
